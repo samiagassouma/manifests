@@ -22,13 +22,7 @@ spec:
             - name: secret-volume
               mountPath: "/etc/secrets"
               readOnly: true
-          resources:
-            limits:
-              memory: "256Mi" # Maximum memory allowed
-              cpu: "20m" # Maximum CPU allowed (200 milliCPU)
-            requests:
-              memory: "128Mi" # Initial memory request
-              cpu: "10m" # Initial CPU request
+
       volumes:
         - name: secret-volume
           secret:
@@ -49,23 +43,4 @@ spec:
   selector:
     app: backend
 
----
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: backend-hpa
-  namespace: development
-spec:
-  maxReplicas: 10 # define max replica count
-  minReplicas: 1 # define min replica count
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: backend-deployment
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 50
+
