@@ -17,7 +17,7 @@ jobs:
           TOKEN=$(curl -s -k -X POST "$ARGOCD_SERVER/api/v1/session" \
             -H "Content-Type: application/json" \
             -d '{"username":"'"$ARGOCD_USER"'","password":"'"$ARGOCD_PASSWORD"'"}' | jq -r .token)
-          curl -X POST -u $ARGOCD_USER:$ARGOCD_PASSWORD \
+          curl -k -X POST -u $ARGOCD_USER:$ARGOCD_PASSWORD \
           "$ARGOCD_SERVER/api/v1/applications/testapp/sync"
         env:
           ARGOCD_SERVER: https://192.168.1.27:32315
