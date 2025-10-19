@@ -14,9 +14,9 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Trigger ArgoCD sync
         run: |
-          curl -X POST -u 192.168.1.27:32315 \
+          curl -X POST -u $ARGOCD_USER:$ARGOCD_PASSWORD \
           "$ARGOCD_SERVER/api/v1/applications/testapp/sync"
         env:
-          ARGOCD_SERVER: https://argocd.example.com
+          ARGOCD_SERVER: http://192.168.1.27:32315
           ARGOCD_USER: ${{ secrets.ARGOCD_USER }}
           ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
